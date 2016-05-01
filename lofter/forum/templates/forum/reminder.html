@@ -1,0 +1,11 @@
+
+{% if cats %}
+    <div class="reminder">
+    {% for cat in cats %}
+        <div>
+            <a href="{% url "forum:get_topics" cat.id %}" ><div style="">{{ cat.name }}</div></a>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endif %} 

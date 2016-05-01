@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% load  staticfiles %}
+<!DOCTYPE html>
+{% block category %}
+<html>
+    <header>
+
+        <script src="{% static "forum/js/jquery-1.11.3.js" %}"></script>
+        <script src="{% static "forum/js/webuploader.js" %}"></script>
+        <script src="{% static "forum/js/jcrop.js" %}"></script>
+        <script src="{% static "forum/js/bootstrap.min.js" %}"></script>
+        <script src="{% static "forum/js/jquery-webox.js" %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static "forum/webuploader.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "forum/upload.css" %}" />
+        <link rel="stylesheet" href="{% static "forum/jquery.Jcrop.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "forum/bootstrap.min.css" %}" type="text/css" />
+        <link rel="stylesheet" href="{% static "forum/jquery-webox.css" %}" type="text/css" />
+
+    </header>
+    <style type="text/css">
+
+/* Apply these styles only when #preview-pane has
+   been placed within the Jcrop widget */
+.jcrop-holder #preview-pane {
+  display: block;
+  position: absolute;
+  z-index: 2000;
+  top: 10px;
+  right: -10px;
+  padding: 6px;
+  border: 1px rgba(30,100,0,.4) solid;
+  background-color: white;
+
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+  width: 250px;
+  height: 170px;
+  overflow: hidden;
+
+}
+
+</style>
+<body>
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+   开始演示模态框
+</button>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+               aria-hidden="true">×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               模态框（Modal）标题
+            </h4>
+         </div>
+          <form method="post" enctype="multipart/form-data" action="{% url "forum:setting" %}">
+              {% csrf_token %}
+
+         <div class="modal-body">
+            <div id="uploader-demo" class="jumbotron">
+    <!--用来存放item-->
+    <div id="fileList" class="uploader-list"></div>
+    <div id="filePicker" class="select "><a class=""></a></div>
+</div>
+         </div>
+          <input type="text" name="script">
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="btn btn-primary " id="">
+               提交更改
+            </button>
+             <button type="button" class="btn btn-primary " id="ctlBtn">as</button>
+            <button type="button" class="preview-page" onclick="javascript:getdivcontent();">
+                预览
+            </button>
+
+         </div>
+              </form>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div>
+        <button type="button" id="propomt1">点我弹出</button>
+    </div>
+
+
+       <button type="button" class="btn btn-default" title="Popover title"
+      data-container="body" data-toggle="popover" data-placement="right"
+      data-content="左侧的 Popover 中的一些内容"   >
+      左侧的 Popover
+   </button>
+
+
+
+</body>
+<script type="text/javascript">
+
+var applicationPath = window.applicationPath === "" ? "" : window.applicationPath || "../../";
+       $(function () {
+            $("[data-toggle='popover']").popover({
+        html: true,
+        trigger: 'manual',
+        container: $(this).attr('id'),
+        placement: 'top',
+        content: function () {
+            $return = '<div class="hover-hovercard">'+'dfdfg'+'</div>';
+        }
+    }).on("mouseenter", function () {
+        var _this = this;
+        $(this).popover("show");
+        $(this).siblings(".popover").on("mouseleave", function () {
+            $(_this).popover('hide');
+        });
+    }).on("mouseleave", function () {
+        var _this = this;
+        setTimeout(function () {
+            if (!$(".popover:hover").length) {
+                $(_this).popover("hide")
+            }
+        }, 100);
+    });
+
+  // 执行一些动作...
+
+           $('#myModal').on('shown.bs.modal', function () {
+
+           var $ = jQuery,
+           $list = $('#fileList'),
+           // 优化retina, 在retina下这个值是2
+           ratio = window.devicePixelRatio || 1,
+           // 缩略图大小
+           thumbnailWidth = 300 * ratio,
+           thumbnailHeight = 300 * ratio,
+           // Web Uploader实例
+           uploader;
+           uploader = WebUploader.create({
+               // 选完文件后，是否自动上传。
+               auto: true,
+               thumb:true,
+               // swf文件路径
+               swf: '{% static "forum/Uploader.swf" %}',
+
+               // 文件接收服务端。
+               server: '{% url "forum:setting" %}',
+
+               // 选择文件的按钮。可选。
+               // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+               pick: $('#filePicker'),
+
+               //只允许选择图片
+               accept: {
+                   title: 'Images',
+                   extensions: 'gif,jpg,jpeg,bmp,png',
+                   mimeTypes: 'image/*'
+               },
+
+    fileNumLimit:300,
+
+           });
+
+
+           uploader.on( 'fileQueued', function( file ) {
+    var $li = $(
+            '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '<img id="tar">' +
+
+            '</div>'
+            ),
+        $img = $li.find('img');
+
+
+    // $list为容器jQuery实例
+    $list.append( $li );
+
+
+    // 创建缩略图
+    // 如果为非图片文件，可以不用调用此方法。
+    // thumbnailWidth x thumbnailHeight 为 100 x 100
+    uploader.makeThumb( file, function( error, src ) {
+        if ( error ) {
+            $img.replaceWith('<span>不能预览</span>');
+            return;
+        }
+
+
+    }, thumbnailWidth, thumbnailHeight );
+
+});
+
+           // 文件上传过程中创建进度条实时显示。
+           uploader.on('uploadProgress', function (file, percentage) {
+               var $li = $('#' + file.id),
+                   $percent = $li.find('.progress span');
+
+               // 避免重复创建
+               if (!$percent.length) {
+                   $percent = $('<p class="progress"><span></span></p>')
+                           .appendTo($li)
+                           .find('span');
+               }
+
+               $percent.css('width', percentage * 100 + '%');
+           });
+
+           // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+           uploader.on('uploadSuccess', function (file, response) {
+
+               $('#' + file.id).append('<img id="target" src='+response.address+'>'+
+                       '<div class="operation">'+
+                       '<span class="operate remove f-pbicon">删除</span>'
+                        +'<div class="operate imgdesc">'+'<input class="hiddendesc ztag" value="" type="hidden">'+
+                       '<span class="editdesc f-pbicon"  >添加描述</span>'+'</div>');
+
+           });
+
+           // 文件上传失败，显示上传出错。
+           uploader.on('uploadError', function (file) {
+               var $li = $('#' + file.id),
+                   $error = $li.find('div.error');
+
+               // 避免重复创建
+               if (!$error.length) {
+                   $error = $('<div class="error"></div>').appendTo($li);
+               }
+
+               $error.text('上传失败');
+           });
+
+           // 完成上传完了，成功或者失败，先删除进度条。
+           uploader.on('uploadComplete', function (file) {
+               $('#' + file.id).find('.progress').remove();
+
+
+           });
+
+          //所有文件上传完毕
+          uploader.on("uploadFinished", function ()
+          {
+             //提交表单
+
+          });
+
+          //开始上传
+          $("#ctlBtn").click(function () {
+              uploader.upload();
+
+          });
+
+          //显示删除按钮
+          $(".cp_img").on("mouseover", function ()
+          {
+              $(this).children(".cp_img_jian").css('display', 'block');
+
+          });
+          //隐藏删除按钮
+          $(".cp_img").on("mouseout", function () {
+              $(this).children(".cp_img_jian").css('display', 'none');
+
+
+          });
+          //执行删除方法
+          $list.on("click", ".cp_img_jian", function ()
+          {
+              var Id = $(this).parent().attr("id");
+              uploader.removeFile(uploader.getFile(Id,true));
+              $(this).parent().remove();
+          });
+
+
+
+      });
+           $('#myModal').on('hidden.bs.modal', function () {
+  // 执行一些动作...
+               $("#filePicker").children().remove();
+               $('#fileList').children().remove();
+
+});
+
+        });
+</script>
+<script type="text/javascript">
+    function getdivcontent(){
+
+
+
+                var newwindow=window.open("http://127.0.0.1:8000/forum/index",'preview');
+                newwindow.onload=function(){
+                 var div1 = newwindow.document.getElementById("preview1");
+                    var obj = document.getElementById("fileList");
+
+
+                    alert(obj.innerHTML);
+                    alert(div1.innerHTML);
+
+                div1.innerHTML=obj.innerHTML};
+
+
+
+
+         };
+</script>
+
+
+</html>
+{% endblock %}

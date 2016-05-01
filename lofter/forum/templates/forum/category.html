@@ -1,0 +1,109 @@
+
+{% extends "base.html" %}
+{%  load staticfiles %}
+{% block javescrip_block %}
+    <link rel="stylesheet" type="text/css" href="{% static "forum/category.css" %}" />
+ <script>
+    $(function () {
+        $(window).load(function(){
+    $("#loading").hide();
+});
+    });
+
+    </script>
+{% endblock %}
+
+{% block main_block %}
+    <div id="loading">
+Loading content, please wait..
+<img src="loading.gif" mce_src="loading.gif" alt="loading.." />
+</div>
+    <div class="band">
+        <div class="band-1">
+            <ul class="band-nav">
+                <li class="first j-crt">
+                    <a href="#">浏览</a>
+                </li>
+                <li>
+                    <a href="#">话题</a>
+                </li>
+                <li>
+                    <a href="#">标签</a>
+                </li>
+                <li>
+                    <a href="#">达人</a>
+                </li>
+                <li>
+                    <a href="#">专题</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="category">
+        <div class="nav-title">
+            <div class="title-box">
+                <ul class="t-nav">
+                    <li class="current">
+                        <a href="#">热门</a>
+                    </li>
+                    <li>
+                        <a href="#">最新</a>
+                    </li>
+                    <li class="last">
+                        <a href="{% url "a-forum:add_category" %}">发起话题</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    <div class="limian">
+        {% for category in categories %}
+            <div class="content-box">
+
+                    <a href="{% url 'a-forum:get_topics' category.id %}" target="_blank"> <div>{{ category.name }}{{ category.involved}}</div></a>
+
+
+        {% for foo in category.category_topic.all %}
+                <div class="topic-box">
+                    <div class="hidden">{{ foo.title }}</div>
+                    {% for pic in foo.topic_picture.all %}
+                    <img src="{{ pic.picture.url }}"/>
+
+                    {% endfor %}
+                    <a href="{% url 'a-forum:get_topics_first' category.id foo.id %}">
+                        <span class="content-content">{{ foo.content }}
+                            <span class="covert"></span>
+                        </span>
+
+                    </a>
+                    <br>
+
+                </div>
+        {% endfor %}
+            </div>
+
+
+    {% endfor %}
+    </div>
+    </div>
+
+
+    <script !src="">
+    $(function () {
+        $(".covert").on('mouseenter', function () {
+            var _this = $(this)
+            setTimeout(function () {_this.css("opacity","0.2");
+
+            },70);
+
+        });
+         $(".covert").on('mouseleave', function () {
+           var _this = $(this)
+           setTimeout(function () {_this.css("opacity","0");
+
+            },70);
+    });
+    });
+    </script>>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{% extends "base.html" %}
+{% block category%}
+    {% if user.is_authenticated %}
+    <p id="asa">hello {{ user}}</p>
+    {% endif %}
+
+    <a href="/forum/add_category/">create txt cateory</a>
+    <div class="category-block">
+        <div class="container">
+        {% if categories %}
+        {% for category in categories %}
+            <div class="category-title">
+                <a href="{% url "a-forum:get_topics" category.id %}">{{ category.name }}</a>
+                <span class="category-involved"><strong>{{ category.involved }}</strong></span>
+            </div>
+            <div class="category-short-content">
+
+            </div>
+            {% endfor %}
+
+        {% else %}
+            <strong id="a">there are no CATEGROY</strong>
+        {% endif %}
+
+        </div>
+    </div>
+    <div id="preview1"><div></div></div>
+{% endblock %}

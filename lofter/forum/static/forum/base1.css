@@ -1,0 +1,153 @@
+
+body{
+    text-align: center;
+    background-color: #ededef;
+
+}
+.container{
+    float: right;
+    position: absolute;
+    left: 600px;
+    width: 700px;
+    text-align: right;
+
+}
+
+.logo1{
+    position: relative;
+    top: -7px;
+    float: left;
+    width: 220px;
+    height: 44px;
+}
+.navbar-brand{
+    top: -10px;
+    left: 23px;
+    overflow: hidden;
+    text-indent: -2000px;
+    position: relative;
+    padding: 0px;
+    float: left;
+    width: 220px;
+    height: 44px;
+    background: url("hd24.png" ) no-repeat scroll 999px 999px;
+    background-position: 0px 0px;
+    z-index: 10;
+}
+.navbar-inverse{
+    background-color: rgba(20, 23, 30, 0.93);
+    height: 82px ;
+    margin-bottom: 30px;
+}
+
+.container-a{
+    width: 928px;
+    height: 0px;
+    margin: 0 210px;
+}
+
+.container-fluid.container-1 {
+    border: none;
+    padding: 0px;
+    margin-top: 20px;
+}
+.navbar-form .form-group{
+    position: absolute;
+    top: 9px;
+    right: 150px;
+    width: 226px;
+    height: 26px;
+    margin-left: 26px;
+    padding: 2px 10px 2px 32px;
+    background-position: 0px -42px;
+
+}
+.navbar-form .form-control{
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    right: 31px;
+    width: 226px;
+    height:26px;
+    vertical-align: middle;
+    border: none;
+    border-radius:12px;
+    padding-left: 30px;
+    padding-right: 2px;
+    z-index: 200;
+    background-color: transparent;
+
+}
+.btn1,.new,.form-group,.navbar-header{
+    background: url("icon4-24.png") no-repeat scroll -9999px -9999px;
+}
+.btn1{
+     position: absolute;
+    background-position: 0px -79px;
+    display: block;
+    height: 22px;
+    width: 18px;
+    left: 10px;
+    z-index: 1000;
+}
+.new{
+    position: absolute;
+    right: 154px;
+    top: 13px;
+    width: 40px;
+    height: 18px;
+    line-height: 18px;
+    color: #303539;
+    text-align: center;
+    background-position: -210px -81px;
+    cursor: Text;
+    z-index: 65;
+
+
+
+}
+
+.glyphicon {
+    position: absolute;
+    left: 340px;
+    top: 17px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+#target {
+    display: block;
+    height: 96px;
+    width: 96px;
+
+}
+span{
+    display: block;
+    z-index: 100;
+}
+.thumbnail {
+    float: left;
+    height: 96px;
+    width: 96px;
+    display: block
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+.operation{
+
+position: relative;
+right: 50px;
+top: -20px;
+z-index: 10;
+height: 30px;
+margin-left: -10px;
+}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block main_block %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <form  method="post" action="" class="form-inline">
+        {% csrf_token %}
+        <div class="form-group">
+            <lable for="exampleInputName2" >用户名：</lable>
+            <input name="username" type="text" class="form-control" id="username" placeholder="Lofter" >
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">密码：</label>
+            <input name="password" type="password" class="form-control" id="password" PLACEHOLDER="密码">
+        </div>
+        <button type="submit" class="" >登陆</button>
+    </form>
+
+</body>
+</html>
+{% endblock %}

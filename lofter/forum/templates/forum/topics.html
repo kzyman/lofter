@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block category %}
+
+
+    <div>{{category }}</div>
+    <br/>
+    <button class="n1" data-toggle="modal" data-target="">
+   开始演示模态框
+    </button>
+        <button class="n2" data-toggle="modal" data-target="#myModal">
+   开始演示模态框
+    </button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"
+               aria-hidden="true">×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               模态框（Modal）标题
+            </h4>
+         </div>
+         <div class="modal-body">
+            <div id="uploader-demo" class="jumbotron">
+    <!--用来存放item-->
+    <div id="fileList" class="uploader-list"></div>
+</div>
+         </div>
+         <div class="modal-footer">
+             <form action="{% url "a-forum:add_texttopic" category.id %}" method="post">
+                 {% csrf_token %}
+                 {{ forum }}
+            <button type="button" class=""
+               data-dismiss="modal">关闭
+            </button>
+            <button type="submit" class="">
+               提交更改
+            </button>
+            <button type="button" class="e" onclick="javascript:getdivcontent();">
+                预览
+            </button>
+             </form>
+         </div>
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+    {% if first_topic %}
+            {{ first_topic.content }}
+        {% endif %}
+    {% for topic in topics %}
+
+        <div>{{ topic.created_by }}</div>
+        {{ topic.title }}
+        {{ topic.content }}
+        {% for pic in topic.topic_picture.all %}
+            <img src="{{ pic.picture.url }}" />
+
+
+
+        {% endfor %}
+        <a  class="favorite" data-type="favorite" href="{% url 'a-forum:favorite' topic.id %}">加入收藏</a>
+        {% for tag in topic.tag.all %}
+            {{ tag }}
+
+        {% endfor %}
+    <form id="user_content" method = 'post' enctype="multipart/form-data">
+        <input type="text" id="{{ topic.id }}" maxlength="200">
+        <button  id="{{ topic.id }}" class='put' type="button" value = "提交" href="{% url 'a-forum:add_reply' topic.id %}" >提交</button>
+    </form>
+        <div class="con{{ topic.id }}"></div>
+        <div class="con"></div>
+        {% if topic.topic_reply.all %}
+            {% for replys in topic.topic_reply.all   %}
+
+            <div style="color: red" class=" reply">{{ replys.content }}</div>
+                <a href="#" id="{{ replys.id }}">删除</a>
+            {% endfor %}
+        {% else %}
+            no reply
+        {% endif %}
+
+{% endfor %}
+
+
+    <script>
+        $(function(){
+            $('.triger').click(function(){
+
+                $('.reply').removeClass("hidden")
+            });
+            $('.n1').click(function(){
+                $('#myModal').modal('show')
+            });
+            $('.favorite').click(function(e){
+                var _node = $(this);
+                var _type = _node.attr('data-type');
+                alert(_type)
+                var _href = _node.attr('href').replace(/\/(favorite|unfavorite)\//igm,'/'+ _type+'/');
+                alert(_href)
+                var _errorMap = {
+                    topic_not_exist: '主题不存在',
+                    can_not_favorite_your_topic: '不能收藏自己的主题',
+                    already_favorited: '之前已经收藏过了',
+                    user_not_login: '收藏失败',
+                    not_been_favorited: '之前还没有收藏过',
+                };
+                e.preventDefault();
+                _node.attr('href',_href);
+                $.getJSON(_node.attr('href'),function(data){
+                   if (data.success){
+                       if(_type ==='favorite'){
+                           _node.html('取消喜欢');
+                           _node.attr('data-type','unfavorite');
+                       }
+                       if(_type === 'unfavorite'){
+                           _node.html('添加喜欢');
+                           _node.attr('data-type','favorite');
+                       }
+
+                   }else{
+                           _node.html('<span>'+_errorMap[data.message]+'<span>');
+                       }
+                });
+
+
+
+            });
+            $('.put').click(function() {
+
+                var _node = $(this);
+                var _href = _node.attr('href');
+                var _text = _node.attr('id');
+                var content = $("input#"+ _text).val();
+                var params = '[{"id":"tastId-6653535157","caption":"sdf","ow":440,"oh":587,"raw":"http://imglf2.nosdn.127.net/img/b0FJTHI3SFptWkFnNXdUZ0RVSkNvR3pTa3NQeVVMd3hnelNkTS9hS1QyM0dzTGxMV2JNMmd3PT0.jpg","rw":440,"rh":587,"rotate":0},{"id":"tastId-2372800545","caption":"人格的风格","ow":440,"oh":587,"raw":"http://nos.netease.com/imglf/img/b0FJTHI3SFptWkFnNXdUZ0RVSkNvRWM4L2pJNFlEcWt4UjJKendhMGN6UEN3RDFuKzVxTlFBPT0.jpg","rw":440,"rh":587,"rotate":0},{"id":"tastId-4057654699","caption":"电饭锅电饭锅","ow":440,"oh":587,"raw":"http://nos.netease.com/imglf2/img/b0FJTHI3SFptWkFnNXdUZ0RVSkNvQi9lam1sSWRmQkpsQ2tTT0h1a05Rc3VwcnlUTzZ3NThRPT0.jpg","rw":440,"rh":587,"rotate":0},{"id":"tastId-1107313217","caption":"电饭锅电饭锅","ow":440,"oh":587,"raw":"http://nos.netease.com/imglf0/img/b0FJTHI3SFptWkFnNXdUZ0RVSkNvSlFzdTlxVXNvL3hSZks1UzRTVkdRU3AxT2xCM2pSOG5RPT0.jpg","rw":440,"rh":587,"rotate":0},{"id":"tastId-6515050620","caption":"徐VC","ow":440,"oh":587,"raw":"http://nos.netease.com/imglf2/img/b0FJTHI3SFptWkFnNXdUZ0RVSkNvTXlncmc0R3NDeTlxNlNEckxXVTQ4dWljcldMSUpsQWRBPT0.jpg","rw":440,"rh":587,"rotate":0}]';
+
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: _href,
+
+                    data: {
+                        'content': content,
+                        a: 'asffas',
+                        photo:params,
+                    },
+
+                    success: function (data) {
+
+                        $('input#'+ _text).val("");
+                        var newcomment = '<li>'+data.content+ '</li>'
+
+
+
+                        $('div.con'+ _text).append( newcomment);
+                        alert(data.content)
+                    }
+                });
+
+                    return false;
+            });
+
+        });
+    </script>
+{% endblock %}
