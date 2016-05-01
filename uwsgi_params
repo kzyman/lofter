@@ -15,3 +15,4 @@ uwsgi_param	SERVER_PORT		$server_port;
 uwsgi_param	SERVER_NAME		$server_name;
 #saasas
 .linshi xiugai
+dev 修改
