@@ -1,0 +1,100 @@
+
+{% extends "forum/base.html" %}
+{%  load staticfiles %}
+{% block javescrip_block %}
+    <link rel="stylesheet" type="text/css" href="{% static "forum/category.css" %}" />
+
+{% endblock %}
+
+{% block main_block %}
+
+    <div class="band">
+        <div class="band-1">
+            <ul class="band-nav">
+                <li class="first j-crt">
+                    <a href="#">浏览</a>
+                </li>
+                <li>
+                    <a href="#">话题</a>
+                </li>
+                <li>
+                    <a href="#">标签</a>
+                </li>
+                <li>
+                    <a href="#">达人</a>
+                </li>
+                <li>
+                    <a href="#">专题</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="category">
+        <div class="nav-title">
+            <div class="title-box">
+                <ul class="t-nav">
+                    <li class="current">
+                        <a href="#">热门</a>
+                    </li>
+                    <li>
+                        <a href="#">最新</a>
+                    </li>
+                    <li class="last">
+                        <a href="{% url "a-forum:add_category" %}">发起话题</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="limian">
+            {% for category in categories %}
+                {% if category.involved != 0 %}
+                    <div class="content-box">
+
+                        <a  class='topic-title'href="{% url 'a-forum:get_topics' category.id %}" target="_blank"> {{ category.name }}
+
+                        </a>
+                        <span class="involved-num">{{ category.involved}}参与</span>
+                        {% for foo in category.get_topic6|slice:":6"  %}
+                            <a  class='topic-a' href="{% url 'forum:get_topics_first' category.id foo.id %}">
+                        <span class="content-content">
+                            {% if foo.topic_picture.all %}
+                                {% for pic in foo.topic_picture.all|slice:":1" %}
+                                    <img src="{{ pic.picture.url}}" width="125px" height="125px">
+                                {% endfor %}
+                            {% else %}
+                                {{ foo.content }}
+                            {% endif %}
+
+                        </span>
+                                <span class="covert"></span>
+
+                            </a>
+
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+
+    <script >
+        $(function () {
+            $(".covert").on({
+                mouseenter: function () {
+                    var _this = $(this)
+                    setTimeout(function () {_this.css("opacity","0.2");
+
+                    },60)},
+                mouseleave : function () {
+                    var _this = $(this)
+                    setTimeout(function () {_this.css("opacity","0");
+
+                    },100)},
+            });
+
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+.form-inline{
+    position: absolute;
+    left: 550px;
+    top: 150px;
+    width: 350px;
+    height: 350px;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 10;
+
+}
+.form-inline1{
+    position: absolute;
+    left: 600px;
+    top: 200px;
+    width: 250px;
+    height: 250px;
+    background-color: white;
+    opacity:10;
+    z-index: 100;
+}
+.form-inline-inner{
+    position: relative;
+    top:50px;
+    left: 20px;
+}
+.carousel-inner{
+    height: 700px;
+
+}
+.input-2{
+    position: relative;
+   top: -10px;
+}
+.login-1{
+    position: relative;
+    left: 1px;
+}
+.login-1 button{
+    padding: 7px 85px;
+
+
+}
+#username{
+    width: 200px;
+}
+#password{
+    width: 200px;
+}
+.item > img{
+    height: 700px !important;
+    width: 100%;
+}
+#captcha{
+    width: 100px;
+    float: left;
+}

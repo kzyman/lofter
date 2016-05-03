@@ -1,0 +1,152 @@
+{% load func %}
+{% for topic in topics %}
+<div>
+    {% ifchanged  topic.created_by.id%}
+        {% if  topic.created_by.common_user.avatar%}
+            <div class="author-info" id="{{ topic.created_by.id }}"data-toggle="popover">
+                <a href="#">
+                    <img class="author-info-user" id="{{ topic.created_by.id }}"  src="{{ topic.created_by.common_user.avatar.url }}">
+                </a>
+            </div>
+        {% endif %}
+    {% endifchanged %}
+    <div class="topic-inner-box-1">
+
+        <div class="topic-inner-box-2">
+            {% ifchanged topic.created_by.id %}
+                <div class="decorator"></div>
+            {% endifchanged %}
+            <div class="topic-inner-box-3">
+                <div class="author"><a  id="{{ topic.created_by.id }}" data-toggle="popover" href="#">{{ topic.created_by.common_user.user_name }}</a></div>
+                <div class="topic-detail">
+                    <div class="topic-detail-1">
+                        {% if topic.title %}
+                            <div class="topic-title-name">
+                                {{ topic.title }}
+                            </div>
+                        {% endif %}
+                        <div class="topic-content-content">
+                            <div class="topic-content-innser">
+
+                                {% for pic in topic.topic_picture.all|slice:":1" %}
+
+                                    <div class="cont-img">
+                                        <div class="img-holder">
+                                            <img src="{{ pic.picture.url }}" />
+                                        </div>
+                                        {% if topic.topic_picture.all.count > 1%}
+                                            <div class="img_num">
+                                                <div class="img_num_inner">{{ topic.topic_picture.all.count }}
+                                                    <span></span>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <ol style="display:none">
+                                    {% for pic in topic.topic_picture.all%}
+                                        {% if pic.picture.width < 480 %}
+                                            <div class="img-holder-list-1" style="width: {{ pic.picture.width }}px">
+                                                <img src="{{ pic.picture.url }}" />
+                                            </div>
+                                        {% else %}
+                                            <div class="img-holder-list">
+                                                <img src="{{ pic.picture.url }}" />
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div style="clear: both"></div>
+                                </ol>
+                                <div class="cont-cont">
+                                    <p>{{ topic.content }}</p>
+                                </div>
+                                <div style=" clear:both; "></div>
+                            </div>
+                        </div>
+                        <div class="topic-foot">
+
+                            <div class="tag">
+
+                                {% for tag in topic.tag.all|slice:":3" %}
+                                    {% if tag.tag|length <= 6 %}
+                                        <span>{{ tag.tag }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                                <div style=" clear:both; "></div>
+                            </div>
+                            <div class="foot-right">
+
+                                {% if not user|if_in_favar:topic.id %}
+                                    <span  class="set-fa" id="{{ topic.id }}" data-type="favorite" href="{% url 'forum:favorite' topic.id %}"></span>
+                                {% else %}
+                                    <span  class="set-fa" id="{{ topic.id }}" data-type="unfavorite" href="{% url 'forum:cancel_favorite' topic.id %}"></span>
+                                {% endif %}
+                            <span >推荐</span>
+                             <span class="reply-button" id="{{ topic.id }}"><span>评论</span><a class="decorator-foot decorator-foot-{{ topic.id }}"></a></span>
+
+                            {% if  topic.forum_favorite_related.count == 0 %}
+                                    <span class="recommend recommend-{{ topic.id }} hidden" id="{{ topic.id }}" >
+                                        <a>热度</a>
+                                        <a class="recommend-num-{{ topic.id }}">({{ topic.forum_favorite_related.count }})</a>
+                                        <a class="recommend-foot-fa recommend-foot-fa-{{ topic.id }}"></a>
+                                    </span>
+                                {% else %}
+                                    <span class="recommend recommend-{{ topic.id }}" id="{{ topic.id }}">
+                                        <a>热度</a>
+                                        <a class="recommend-num-{{ topic.id }}">({{ topic.forum_favorite_related.count }})</a>
+                                        <a class="recommend-foot-fa recommend-foot-fa-{{ topic.id }}"></a>
+                                    </span>
+                                {% endif %}
+                                {% if user.id == topic.created_by.id %}
+                                    <span class="edit edit-{{ topic.id }} " id="{{ topic.id }}" >
+                                        <a>编辑</a>
+
+                                    </span>
+                            {% endif %}
+
+                            </div>
+
+                            <div style=" clear:both; "></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="involved-reply-hot involved-reply-hot-{{ topic.id }}" style="display: none">
+                <div class="reply reply-{{ topic.id }}" style="display: none">
+                    <form id="user_content" method = 'post' enctype="multipart/form-data">
+                        <input type="text" id="{{ topic.id }}" maxlength="500">
+                        <button  id="{{ topic.id }}" class='put btn' type="button " value = "提交" href="{% url 'a-forum:add_reply' topic.id %}" >提交</button>
+                    </form>
+                    {% if topic.topic_reply.all %}
+                        <div class="reply" style="">
+                            {% for replys in topic.topic_reply.all   %}
+                                <div style="color: red" class=" reply">{{ replys.content }}</div>
+                                <a href="#" id="{{ replys.id }}">删除</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="favorite-info favorite-info-{{ topic.id }}">
+
+                    {% for favorite in topic.forum_favorite_related.all  %}
+                        <div class="favorite-info-items favorite-info-items-{{ topic.id }}">
+                            <div class="favorite-item-user-info">
+                                {% if favorite.owner.common_user.avatar %}
+                                    <div class="user-img" data-toggle="popover" id="{{  favorite.owner.id }}"><img src="{{ favorite.owner.common_user.avatar.url }}"/></div>
+                                {% endif %}
+                                <div class="user-name-div" data-toggle="popover" id="{{  favorite.owner.id }}"><a href="#" class="user-name">{{ favorite.owner.common_user.user_name }}</a>: 喜欢此图片</div>
+                                <div style="clear: both"></div>
+                            </div>
+                            <div style="clear: both"></div>
+                        </div>
+                    {% endfor %}
+
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+        </div>
+        <div style=" clear:both; "></div>
+    </div>
+</div>
+{% endfor %}

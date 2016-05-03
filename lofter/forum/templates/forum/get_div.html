@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<head>
+    <script type="text/javascript" charset="utf-8">
+        window.UEDITOR_HOME_URL = "/static/ueditor/";
+    </script>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/ueditor/themes/default/css/ueditor.min.css"/>
+</head>
+<div class="ceshi">
+    <div class="edit-background-screen"></div>
+    <div class="edit-background-screen-1">
+        <div class="edit-decorator"></div>
+        <div class="edit-inner">
+            <div class="edit-inner-1">
+                <div class="edit-box">
+                    <div class="edit-icon">
+                        <a class="img-user">
+                            <img src="{{ user.common_user.avatar.url }}"/>
+                        </a>
+                    </div>
+                    <div class="edit-content-box">
+                        <div class="edit-content-box-decorator"></div>
+                        <div class="remove">sad</div>
+                        <div class="edit-content-box-inner">
+                            <div class="edit-content-box-inner-out">
+                                <div class="edit-body">
+                                    <div class="user-name-box">
+                                        {{ user.common_user.user_name }}
+                                    </div>
+                                    <div class="edit-imgs">
+                                        <div class="edit-img-box">
+                                            {% if img_num == 1 %}
+                                                {% for img in topic.topic_picture.all %}
+                                                    <div class="img"><img src="{{ img.picture.url }}"/></div>
+                                                {% endfor %}
+                                            {% else %}
+                                                {% for img in topic.topic_picture.all %}
+                                                    <div class="img-small"><img src="{{ img.picture.url }}"/></div>
+                                                {% endfor %}
+                                            {% endif %}
+                                            <p style="clear:both"></p>
+                                        </div>
+                                        {% if count < 10%}
+                                            <div class="filePicker">继续添加</div>
+                                        {% endif %}
+                                        <div style="clear:both"></div>
+                                    </div>
+                                    <div style="width: 550px; height: 300px">
+                                        <textarea id="content" name="content" style="width:555px;height:200px;line-height:18px;"></textarea>
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                <div style="clear:both"></div>
+
+                </div>
+
+            </div>
+        <div style="clear:both"></div>
+        </div>
+    <div style="clear:both"></div>
+    </div>
+
+    <script>
+        $(function(){
+            var uploader = WebUploader.create({
+                // 选完文件后，是否自动上传。
+                auto: true,
+                thumb:true,
+                // swf文件路径
+                swf: '/static/forum/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '/forum/post_setting/',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: $('.filePicker'),
+
+                //只允许选择图片
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                },
+
+                fileNumLimit:300,
+
+            });
+
+        });
+        var ue=new UE.getEditor('container', {
+            toolbars: [
+                [ 'blockquote','link','bold','underline',]
+            ],
+            autoHeightEnabled: true,
+            autoFloatEnabled: true});
+        ue.render('content');
+
+    </script>
+    <style type="text/css">
+        .webuploader-pick{
+            width: 550px;
+            background: white;
+            color: rgba(121, 111, 119, 1);
+        }
+    </style>
+</div>
