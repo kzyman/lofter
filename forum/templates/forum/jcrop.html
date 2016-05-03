@@ -1,0 +1,51 @@
+
+{% load staticfiles %}
+
+<head>
+    <meta charset="UTF-8">
+    <script src="{% static "forum/js/jquery-1.11.3.js" %}"></script>
+    <script src="{% static "forum/js/jcrop.js" %}"></script>
+    <script src="{% static "forum/js/webuploader.js" %}"></script>
+    <script src="{% static "forum/js/json2.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "forum/jcropdemon.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "forum/jquery.Jcrop.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "forum/webuploader.css" %}" />
+
+
+    <title></title>
+</head>
+<body>
+
+    <div class="main-domen">
+    <div class="main-jcrop">
+        <img id="target" src style="display: none">
+        <a  id="filePicker" href="#"><span>选择图片</span></a>
+    </div>
+
+    <div  id="preview-pane">
+        <div class="preview-container">
+            <img class="jcrop-preview" src="{% static "images/ceshi.gif" %}">
+        </div>
+        <div class="mpreview-container">
+            <img class="jcrop-preview" src="{% static "images/ceshi.gif" %}">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="btn-jcrop">
+
+    <a><span></span></a>
+</div>
+
+<div href="#" id="file2" class="add " ></div>
+<div class="user" id="{{ user.id }}" style="visibility: hidden">{{ user.username }}</div>
+<a id="pt" class="post-avatar btn"style="display: block" >保存并关闭</a>
+
+</body>
+<script src="{% static "forum/js/jcropdemon.js" %}"></script>
+
+
