@@ -34,3 +34,4 @@ urlpatterns =[
     url(r'^get_captcha/$', get_captcha, name='get_captcha'),
 
 ]
+#这里是我标注的测试
