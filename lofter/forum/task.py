@@ -4,4 +4,8 @@ from celery import shared_task
 @shared_task
 def add(x, y):
     return  x + y
-#zheli work1修改的
+
+def a(w):
+    print w
+#这里也是
+
