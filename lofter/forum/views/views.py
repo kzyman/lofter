@@ -74,20 +74,26 @@ def category_a(request):
 def load_topics(request):
     user=request.user
     if request.method == 'POST':
-        category= request.POST.get('id')
-        page =request.POST.get('page')
-        page=int(page)
-        print page
-        if page>4:
-            topics = BaseTopic.objects.get_topics_by_cat(category)[4:page]
+        category = request.POST.get('id')
+        num = int(request.POST.get('num'))
+        request_num = int(request.POST.get('request_num'))#display page_num_list
+        pages = int(request.POST.get('pages'))#calculate_topic_position
+        num=int(num)
+        pages_object_num = (pages-1)*12
+        print num
+        print pages_object_num
+
+        if num>4:
+            topics = BaseTopic.objects.get_topics_by_cat(category)[pages_object_num+request_num*4:pages_object_num+request_num*4+4] #请求次数×4 再加上不同页数减去前一页去掉前面浏览的个数
         else:
-            topics = BaseTopic.objects.get_topics_by_cat(category)[page-4:page]
+            topics = BaseTopic.objects.get_topics_by_cat(category)[pages_object_num:pages_object_num+num]
         print topics
     return render(request,'forum/load-topics.html',locals())
 @login_required
-def get_topics(request,category,topic_id=None):
+def get_topics(request,category,topic_id=None,pages=1):
     seq=[]
     user=request.user
+    pages=pages
     try:
         first_topic = BaseTopic.objects.get(pk=topic_id)
     except BaseTopic.DoesNotExist:

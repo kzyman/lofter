@@ -6,4 +6,4 @@ def add(x, y):
     return  x + y
 def a(w):
     print w
-#这里也是
+

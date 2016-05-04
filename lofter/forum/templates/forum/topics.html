@@ -12,6 +12,8 @@
             <div class="topics">
                 <div class="category-name">
                     <span class=" topic_num hidden">{{ topics_num }}</span>
+                    <span class=" view_pages hidden">{{ pages }}</span>
+
                     <div class="name" id="{{ category.id }}">{{category }}</div>
                     <div class="category-desc">
                         <div class="">{{ category.description }}</div>
@@ -67,7 +69,9 @@
                     url:'/forum/load_topics/',
                     data:{
                         'id':$('.name').attr('id'),
-                        'page':4,
+                        'num':4,
+                        'pages':$('.view_pages').text(),
+                        'request_num':0,
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
                     success:function(data){
@@ -78,21 +82,26 @@
                 })
             });
 
-            console.log($(window).scrollTop());
-                console.log($(window).height());
-                console.log($(document.body).height()-10);
+
+            console.log($(".topic_num").text())
+            console.log($('.view_pages').text())
 
             $(window).on("scroll",function(){
+                var pages= $('.view_pages').text()
                 setTimeout(function(){
-                if($(window).scrollTop() + $(window).height() > $(document.body).height()-10 && num<$(".topic_num").val() ){
+
+                if($(window).scrollTop() + $(window).height() > $(document.body).height()-10 && num < 12 ){
                     num+=4
+                    var i=(num/4)-1;
 
                         $.ajax({
                     type:'post',
                     url:'/forum/load_topics/',
                     data:{
                         'id':$('.name').attr('id'),
-                        'page':num,
+                        'num':num,
+                        'pages':pages,
+                        'request_num':i,
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
                     success:function(data){
