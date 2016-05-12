@@ -226,8 +226,8 @@ a:hover{
     width: 105px;
     height: 105px;
 }
-.edit-img-box div{
-    margin: 4px 3px;
+.edit-img-box .img-small{
+    margin: 1px 1px 0 0;
     float: left;
 
 }
@@ -244,4 +244,45 @@ a:hover{
 }
 #edui1_bottombar{
     display: none;
+}
+.img-small{
+    width: 105px;
+    background-color: black;
+}
+.img-operator{
+    position: absolute;
+    top: 140px;
+    width: 105px;
+    height: 30px;
+    display: none;
+}
+.img-operator span{
+
+    display: block;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    text-indent: -9999px;
+    float: right;
+}
+.img-delete,.img-descript-text,.img-rotate{
+    background: url("../images/pbicon.png")-9999px -9999px no-repeat;
+}
+.img-delete{
+    background-position: -1px -208px;
+    margin-left: 3px;
+
+}
+.img-descript{
+    width: 30px;
+    margin:0 3px;
+    margin: 0 5px 0 7px;
+    float: right;
+}
+.img-descript-text{
+    background-position: -1px -304px;
+}
+.img-rotate{
+    background-position: -1px -400px;
+
 }

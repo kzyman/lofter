@@ -87,7 +87,7 @@ def jcrop(request):
 def get_setting(request):
     user=request.user
     return render(request,'user/setting1.html',locals())
-
+@csrf_exempt
 def post_setting(request):
     if request.method =='POST':
         files = request.FILES.get('file')

@@ -53,6 +53,13 @@ $(function(){
         $('.ceshi').remove();
         $('body').css("overflow",'auto')
     });
+    $(document).on("mouseover",".img-small img",function(){
+               $(this).next(".img-operator").show();
+
+    });
+        $(document).on("mouseleave",".img-small",function(){
+        $(".img-operator").hide();
+    });
 
 
 });
