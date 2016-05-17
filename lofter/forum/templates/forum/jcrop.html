@@ -1,12 +1,11 @@
 
 {% load staticfiles %}
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <head>
     <meta charset="UTF-8">
     <script src="{% static "forum/js/jquery-1.11.3.js" %}"></script>
     <script src="{% static "forum/js/jcrop.js" %}"></script>
     <script src="{% static "forum/js/webuploader.js" %}"></script>
-    <script src="{% static "forum/js/json2.js" %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static "forum/jcropdemon.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "forum/jquery.Jcrop.css" %}" />
     <link rel="stylesheet" type="text/css" href="{% static "forum/webuploader.css" %}" />
@@ -18,7 +17,7 @@
 
     <div class="main-domen">
     <div class="main-jcrop">
-        <img id="target" src style="display: none">
+        <img id="target" src="#" style="display: none;">
         <a  id="filePicker" href="#"><span>选择图片</span></a>
     </div>
 

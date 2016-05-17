@@ -100,12 +100,12 @@ def post_setting(request):
                 'error':u"必须大于140像素"
             }),content_type="application/json")
         if width>height+50:
-            size = (440,200)
+            size = (450,230)
 
         else:
             size = (260,350)
         x,y = size
-        pic.thumbnail(size,Image.ANTIALIAS)
+        pic=pic.resize(size,Image.ANTIALIAS)
         pic.save(settings.MEDIA_PATH+'/%s.gif' % pic_id)
 
         return HttpResponse(json.dumps({
@@ -185,6 +185,21 @@ def test(request):
         file = request.FILES.get("Filedata",None)
         content["savepath"] = file
     return render(request,'user/test.html')
+@login_required
+def self_center(request,user_id):
+    from django.http import Http404
+    try:
+        user=User.objects.select_related('common_user').\
+            prefetch_related('author_topic__topic_picture','author_topic__topic_reply').get(pk=user_id)
+    except User.DoesNotExist:
+        print 'no such user'
+        raise Http404("Poll does not exist")
+
+    return render(request,'user/setting1.html',locals())
+
+
+
+
 
 
 

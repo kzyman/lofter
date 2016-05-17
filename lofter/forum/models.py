@@ -83,6 +83,7 @@ class BaseTopicManager(models.Manager):
             query = self.get_queryset().filter(created_date=date, created_by=uid)
             dic.setdefault(date,[]).append(query)
         return dic
+
 class PicManager(models.Manager):
     def get_first_pic(self):
         try:
@@ -123,6 +124,7 @@ class BaseTopic(models.Model):
     tag = models.ManyToManyField(Tag, related_name="tag_topic",blank=True)
     topic_type =models.IntegerField(blank=True,null=True)
     Mp3 = models.OneToOneField(Mp3,blank=True,null=True)
+    #type = models.CharField(blank=True,max_length=20)
     objects = BaseTopicManager()
 
     def __unicode__(self):

@@ -3,10 +3,13 @@
 <div>
     {% ifchanged  topic.created_by.id%}
         {% if  topic.created_by.common_user.avatar%}
+            <div class="author-info-holder" style="width: 64px;position: absolute;">
             <div class="author-info" id="{{ topic.created_by.id }}"data-toggle="popover">
-                <a href="#">
+                <a href="{% url "forum:self_center" topic.created_by.id  %}">
                     <img class="author-info-user" id="{{ topic.created_by.id }}"  src="{{ topic.created_by.common_user.avatar.url }}">
                 </a>
+            </div>
+            <div style="clear: both"></div>
             </div>
         {% endif %}
     {% endifchanged %}

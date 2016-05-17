@@ -1,18 +1,88 @@
-{% extends "forum/base.html" %}
-{% block main_block %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="{% static "forum/js/jquery-1.11.3.js" %}"></script>
+    <script src="{% static "forum/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "forum/js/search.js" %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static "forum/bootstrap.min.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "forum/self-center.css" %}" />
+
+
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <title>base model</title>
+    {% block javescrip_block %}{% endblock %}
+    {% block cass_block %}{% endblock %}
+</head>
+<body>
 <button class="show-setting" style="position: absolute ;left: 0px">asdasd</button>
-    <button class="show-setting1"style="position: absolute ;left: 20px">asdasd</button>
+<button class="show-setting1"style="position: absolute ;left: 20px">asdasd</button>
 <div id="set"  class="avator-set " style="display:none; width:720px;height:510px;overflow: hidden; border: solid; position: absolute; left: 100px;top:10px;z-index: 2000;background-color: white">
     <div style="width: 650px;height: 400px; position: relative; top: 60px ">
         <iframe id="ifram1" src="#" style=" position:absolute; left:50px;width:650px;height:400px;overflow: hidden;"></iframe>
 
     </div>
-
 </div>
+<div class="whole-body">
+    <div class="self-title">
+        <ul class="self-func">
+            <li><a href="http://www.lofter.com/message/kezhiyu" hidefocus="true" rel="nofollow">私信</a></li>
+            <li><a href="http://kezhiyu.lofter.com/rss" hidefocus="true">RSS</a></li>
+            <li><a href="http://kezhiyu.lofter.com/view" hidefocus="true">归档</a></li>
 
+        </ul>
+        <div class="self-img">
+                <div class="self-img-holder">
+                    <a class="self-holder img" href="#">
+                        <img src="{{ user.common_user.avatar.url }}" height="150" width="150">
+                    </a>
+                </div>
+                <div class="self-sub">
+                    <h1>{{ user.common_user.user_name }}</h1>
+                    <p>{{ user.common_user.description }}</p>
+                </div>
+
+        </div>
+    </div>
+    <div class="self-content">
+        <div class="self-content-inner">
+            <div class="self-content-inner-1">
+                {% with topic=user.author_topic.all %}
+                    {% for topic1 in topic%}
+                    {% if topic1.topic_picture.all %}
+                        {% for pic in topic1.topic_picture.all|slice:'1' %}
+
+                        <div class="cntent-box pic">
+                            <a href="#"><img src="{{ pic.picture.url }}"/></a>
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                        <div class="content-box text">
+                            <div class="topic-title"><h5>{{ topic1.title }}</h5></div>
+                            <div class="topic-content"><p>{{ topic1.content }}</p></div>
+                        </div>
+
+                    {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 <script>
     $(function(){
-         $('.show-setting').click(function(){
+        $('.show-setting').click(function(){
             $('#ifram1').attr('src','/forum/jcrop/');
         });
         $('.show-setting').click(function(){
@@ -20,7 +90,7 @@
         });
 
         $('.show-setting1').click(function(){
-            $('.avator-set').fadeOut(500);
+            $('.avator-set').hide();
         });
 
 
@@ -36,4 +106,5 @@
     });
 
 </script>
-{% endblock %}
+
+</html>

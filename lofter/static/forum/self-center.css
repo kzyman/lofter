@@ -1,0 +1,59 @@
+body{
+background: #e8e9db;
+
+}
+.whole-body{
+    width: 850px;
+    background: #fff;
+    margin: 0 auto;
+    padding: 18px 0 90px;
+}
+.self-title{
+    padding: 0 0 40px;
+    border-bottom: 1px solid #ddd;
+}
+.self-func{
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+.self-func li{
+    padding-bottom: 8px;
+    margin: 0 20px;
+    display: inline-block;
+}
+.self-img{
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+
+}
+.self-holder img{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 32px 0 12px;
+}
+.self-img-holder a{
+    outline: 0;
+
+ text-decoration: none;
+}
+.self-img-holder a:hover{
+        color: #999;
+
+}
+ img:hover{
+     opacity: 0.7;
+ }
+.self-content{
+    margin: 0 auto;
+    width: 500px;
+    text-align: center;
+}
+.content-box{
+
+    margin: 0 0 54px;
+    text-align: center;
+
+}

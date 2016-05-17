@@ -34,13 +34,13 @@
             <div class="side-content">
                 {% for user in seq%}
                     <div class="user-box-1">
-                        <a class="user-box" id='{{user.id}}' data-toggle="popover"href="#">
+                        <a class="user-box" id='{{user.id}}' data-toggle="popover" href="{% url "forum:self_center" user.id  %}">
                         {% if user.common_user %}
                             {% if user.common_user.avatar %}
                             <span class="side-img"><img src="{{ user.common_user.avatar.url }}"/></span>
                                 {% endif %}
 
-                            <span class="side-user-name">
+                            <span class="side-user-name" >
                                 <span>{{ user.common_user.user_name }}</span>
                                 <span id="aft">
                                     活跃用户
@@ -60,10 +60,18 @@
             <div style=" clear:both; "></div>
         </div>
     </div>
+    <div style="display: none;" class="m-loadm" id="loadmore">
+  <div class="loadm">载入更多内容</div>
+</div>
         <script>
+
         $(function () {
+            var flag=true;
             var num=4;
+            var load =$(".m-loadm")
             $(".main").ready(function(){
+                flag=false;
+
                 $.ajax({
                     type:'post',
                     url:'/forum/load_topics/',
@@ -78,8 +86,11 @@
                         $('.topic-content').append(data)
                         $.getScript("{% static "forum/js/topics-js.js" %}");
 
+                        flag=true;
+
                     }
                 })
+
             });
 
 
@@ -88,12 +99,14 @@
 
             $(window).on("scroll",function(){
                 var pages= $('.view_pages').text()
-                setTimeout(function(){
 
-                if($(window).scrollTop() + $(window).height() > $(document.body).height()-10 && num < 12 ){
+
+                if($(window).scrollTop() + $(window).height() > $(document.body).height()-10 && num < 12 && flag){
+                    load.show();
+                    flag=false
                     num+=4
                     var i=(num/4)-1;
-
+                    setTimeout(function(){
                         $.ajax({
                     type:'post',
                     url:'/forum/load_topics/',
@@ -106,15 +119,15 @@
                     },
                     success:function(data){
                         $('.topic-content').append(data);
-
+                            load.hide();
                     $(document).scrollTop(300);
-
+                        flag=true;
                     }
-                })
+                })},2000);
 
 
 
-                };},2000);
+                };
             });
         $(document).on('click','.recommend',function(){
         var _this = this,

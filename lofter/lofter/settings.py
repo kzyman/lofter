@@ -40,9 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forum',
-    'DjangoUeditor'
-
-
 
 )
 
@@ -74,7 +71,13 @@ DATABASES = {
         'PORT':'3306',
     }
 }
-
+CACHES ={
+    'default': 'redis_cache.cache.RedisCache',
+    'LOCATION': '127.0.0.1.6379',
+    'OPTIONS':{
+        'CLIENT_CLASS':'redis_cache.client.DefaultClient',
+    }
+}
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 

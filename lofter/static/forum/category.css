@@ -3,7 +3,7 @@
     width: 926px;
     height: 92px;
     margin-bottom: 30px;
-    box-shadow: 2px 2px 5px #888888;
+
 }
 body{
         background-color: #ededef;
@@ -35,7 +35,7 @@ body{
 }
 .band-nav a{
     display: block;
-    height: 85px;
+    height: 90px;
     border-bottom: 6px solid #FFF;
     font-size: 20px;
     color: #444;
@@ -44,6 +44,9 @@ body{
     letter-spacing: 6px;
     text-decoration:none;
     outline: none;
+}
+.band-nav a:hover{
+    border-bottom-color: #9AC600;
 }
 
 .j-crt a{
@@ -153,6 +156,10 @@ font:bold 11px Arial, Helvetica, sans-serif;
 .last{
     position: relative;
 
+}
+.band-out{
+    background-color: white;
+    margin-top: -20px;
 }
 .topic-a{
     position: relative;

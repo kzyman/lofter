@@ -4,7 +4,7 @@ from forum.models import *
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from DjangoUeditor.forms import UEditorField
+
 class MusicForm(ModelForm):
     class Meta:
         model = BaseTopic
@@ -68,8 +68,5 @@ class SettingForm(ModelForm):
 
     avatar =forms.ImageField(required=False)
 
-
-class PictureForm(forms.Form):
-    description=UEditorField("描述",initial="",width=550,height=400)
 
 

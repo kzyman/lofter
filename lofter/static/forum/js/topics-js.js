@@ -66,8 +66,8 @@ $(function(){
 
                 }
                 else if ($(_this).attr('class')=='author-info'){
-                    $('.arrow').css('left','32%');
-                    $('.popover').css({'left':'100px',});
+                    $('.arrow').css('left','18%');
+                    $('.popover').css({'position':'absolute','left':'-50px'});
 
                 }
 
