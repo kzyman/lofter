@@ -42,6 +42,17 @@ INSTALLED_APPS = (
     'forum',
 
 )
+TEMPLATE_CONTEXT_PROCESSORS=(
+    "django.contrib.auth.context_processors.auth",
+    "django.template.context_processors.debug",
+    "django.template.context_processors.i18n",
+    "django.template.context_processors.media",
+    "django.template.context_processors.static",
+    "django.template.context_processors.tz",
+    #'django.core.context_processors.request'
+    "django.contrib.messages.context_processors.messages",
+    "lofter.online_middleware.context",
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -51,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "lofter.online_middleware.OnlineUsers",
 )
 
 ROOT_URLCONF = 'lofter.urls'
@@ -71,13 +83,7 @@ DATABASES = {
         'PORT':'3306',
     }
 }
-CACHES ={
-    'default': 'redis_cache.cache.RedisCache',
-    'LOCATION': '127.0.0.1.6379',
-    'OPTIONS':{
-        'CLIENT_CLASS':'redis_cache.client.DefaultClient',
-    }
-}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
