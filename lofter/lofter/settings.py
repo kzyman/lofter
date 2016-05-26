@@ -64,11 +64,21 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "lofter.online_middleware.OnlineUsers",
 )
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        "OPTIONS": {
+            "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+            "PICKLE_VERSION": -1,
+        },
+    },
+}
 
 ROOT_URLCONF = 'lofter.urls'
 
 WSGI_APPLICATION = 'lofter.wsgi.application'
-
+ON_SERIALIZER='django.contrib.sessions.serializers.PickleSerializer'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -93,7 +103,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 MEDIA_URL = '/media/'
 MEDIA_PATH=os.path.join(BASE_DIR,'media')

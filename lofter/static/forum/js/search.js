@@ -43,8 +43,12 @@ $(function(){
         var id = $(this).attr('id');
         $.get("/forum/get_div/",{'id':id},function(data){
             $('body').css('overflow','hidden');
-
             $('body').append(data);
+            var h=$('.edit-inner-1').height();
+            $('.edit-inner').css('height',h+200+'px');
+
+            $('.edit-background-screen').css('height',h+200+'px');
+
 
         });
     });

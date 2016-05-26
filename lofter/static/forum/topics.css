@@ -410,3 +410,37 @@ ol{
     font-size: 24px;
     color: #444;
 }
+.img-small{
+    position: relative;
+}
+.oparator{
+    display: none;
+    position: absolute;
+    right: 4px;
+    top: 75px;
+    z-index: 10;
+    height: 30px;
+    margin-left: -10px;
+}
+
+
+.operate {
+
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-left: 3px;
+    text-indent: -9999px;
+    cursor: pointer;
+    background: url("../images/pbicon.png")-9999px -9999px no-repeat;
+}
+.operate.remove-img{
+    background-position: -1px -208px;
+
+}
+.operate.rotate{
+    background-position: -1px -400px;
+}
+.operate.note{
+    background-position: -1px -304px;
+}

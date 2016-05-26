@@ -32,14 +32,24 @@
                                         <div class="edit-img-box">
                                             {% if img_num == 1 %}
                                                 {% for img in topic.topic_picture.all %}
-                                                    <div class="img"><img src="{{ img.picture.url }}"/></div>
+                                                    <div class="img-big"><img src="{{ img.picture.url }}"/></div>
                                                 {% endfor %}
                                             {% else %}
                                                 {% for img in topic.topic_picture.all %}
-                                                    <div class="img-small"><img src="{{ img.picture.url }}"/></div>
+
+                                                    <div class="img-small">
+                                                        <img src="{{ img.picture.url }}"/>
+                                                        <div class="oparator">
+                                                            <span class="operate remove-img"></span>
+                                                            <span class="operate note"></span>
+                                                            <span class="operate rotate"></span>
+                                                        </div>
+                                                    </div>
+
+
                                                 {% endfor %}
                                             {% endif %}
-                                            <p style="clear:both"></p>
+                                            <div class ="img-clear" style="clear:both"></div>
                                         </div>
                                         {% if count < 10%}
                                             <div class="filePicker">继续添加</div>
@@ -55,14 +65,14 @@
                         </div>
 
                     </div>
-                <div style="clear:both"></div>
+                    <div style="clear:both"></div>
 
                 </div>
 
             </div>
-        <div style="clear:both"></div>
+            <div style="clear:both"></div>
         </div>
-    <div style="clear:both"></div>
+        <div style="clear:both"></div>
     </div>
 
     <script>
@@ -89,8 +99,48 @@
                 },
 
                 fileNumLimit:300,
+                duplicate:true,
 
             });
+            uploader.on('uploadSuccess', function (file, response) {
+                if(response.error){
+                    alert('no')
+                }
+                else{
+
+                    if($('.edit-img-box').children('.img-big').length==0 && $('.edit-img-box').children('.img-small').length==0 ){
+                        $('.img-clear').before('<div class="img-big">'+'<img src='+response.address+'/>'+
+
+                            '</div>');
+
+
+                    }
+                    else{
+                    $('.img-big').attr('class','img-small');
+                    $('.img-clear').before('<div class="img-small">'+'<img src='+response.address+'/>'+
+                            '<div class="oparator">'+
+                            '<span class="operate remove-img">'+'</span>'+
+                            '<span class="operate note">'+'</span>'+
+                            '<span class="operate rotate">'+'</span>'+
+                            '</div>'+'</div>'
+                    );
+
+                }
+
+                };
+
+            });
+            
+            $(document).on('mouseenter','.img-small',function(){
+                $(this).find('.oparator').show()
+            });
+            $(document).on('mouseleave','.img-small',function(){
+                $(this).find('.oparator').hide()
+            });
+            $(document).on('click','.remove-img',function(){
+                $(this).parents('.img-small').remove()
+            });
+
 
         });
         var ue=new UE.getEditor('container', {

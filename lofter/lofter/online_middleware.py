@@ -41,14 +41,13 @@ def get_online_users():
             else:
                 fresh_users[id] = True
                 anonymous_count += 1
-        cache.set(CACHE_ONLINE_USERS_KEY, fresh_users, 480)
+    cache.set(CACHE_ONLINE_USERS_KEY, fresh_users, 480)
    
     return registered_users.values(), anonymous_count
 
 def add_online_user(request):
     users = cache.get(CACHE_ONLINE_USERS_KEY, {})
     if request.user.is_authenticated():
-        print '1'
         users[request.session.session_key] = request.user
         cache.set(get_cache_key_for_session(request.session.session_key), request.user, 480)
     else:

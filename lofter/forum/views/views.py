@@ -1,5 +1,7 @@
 #coding:utf-8
 from django.db import connection
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 import uuid, os
 import json
 from PIL import Image
@@ -14,12 +16,12 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from forum.task import *
-@login_required
+from django.core.cache import cache
+
 def index(request):
     user = request.user
-
     categories = Category.objects.prefetch_related('category_topic__topic_picture').all()
-    return render(request, 'forum/index.html', locals())
+    return render_to_response('forum/index.html',locals(),context_instance=RequestContext(request))
 def subscript(request):
     return render(request,'forum/reminder.html',{'cats':Category.objects.all()[:10]})
 def get_div(request):

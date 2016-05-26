@@ -24,6 +24,7 @@ urlpatterns =[
     url(r'^favorite/(?P<topic_id>[\w]+)/$',favorite,name='favorite'),
     url(r'^unfavorite/(?P<topic_id>[\w]+)/$',cancel_favorite,name='cancel_favorite'),
     url(r'post_setting/$',post_setting,name='setting'),
+    url(r'self_center/(?P<user_id>[\w]+)/$',self_center,name='self_center'),
     url(r'reply/(?P<topic_id>[\w]+)/$',add_reply,name='add_reply'),
     url(r'get_setting/$',get_setting,name='get_setting'),
     url(r'^search/$', search, name='search'),

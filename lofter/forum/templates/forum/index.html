@@ -2,6 +2,15 @@
 {% extends "forum/base.html" %}
 {% load staticfiles %}
 {% block category%}
+
     <link rel="stylesheet" type="text/css" href="{% static "forum/webuploader.css" %}" />
     <script src="{% static "forum/js/webuploader.js" %}"></script>
+{% endblock %}
+{% block main_block %}
+{% for i in online_users %}
+        <p>{{ i}}</p>
+    {% endfor %}
+    <p>{{ online_users }}</p>
+    <p>{{ online_anon }}</p>
+
 {% endblock %}

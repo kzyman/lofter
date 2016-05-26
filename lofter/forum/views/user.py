@@ -41,7 +41,8 @@ def register(request):
 def get_user(request):
     img_list=[]
     a = request.GET['id']
-    info = request.session.get('user-'+a)
+    info = cache.get('user-'+a,{})
+    print info
     if info :
         following = info['following_num']
         article =info['article_num']
@@ -62,15 +63,15 @@ def get_user(request):
         if hot_img:
             for img in hot_img:
                 img_list.append(img.picture.url)
-        request.session['user-'+a]={
+        cache.set('user-'+a,{
             'following_num':following,
             'article_num':article,
             'favorite_num':favorite,
             'img':img_list,
             'avatar':avatar,
-            'is_following':is_following}
+            'is_following':is_following},480)
 
-        # print connection.queries
+
 
     return  HttpResponse(json.dumps({
         'following_num':following,
@@ -113,8 +114,7 @@ def post_setting(request):
             'width':x,
             'height':y,
         }),content_type="application/json")
-    else:
-        return get_setting(request)
+
 @login_required
 def set_avata(request):
     user = request.user

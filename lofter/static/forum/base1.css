@@ -181,8 +181,7 @@ a:hover{
 }
 
 .edit-box{
-    width: 745px;
-    height: 700px;
+
     opacity: 1;
 
 }
@@ -201,7 +200,7 @@ a:hover{
 .edit-icon {
     width: 75px;
     height: 75px;
-    position: absolute;
+    float: left;
     background-color: white;
 }
 .edit-icon img {
@@ -212,8 +211,8 @@ a:hover{
 .edit-content-box{
     width: 618px;
     background-color: white;
-    position: absolute;
-    left: 125px;
+
+    float:right;
 
 }
 .edit-content-box-inner{

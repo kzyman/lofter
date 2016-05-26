@@ -67,6 +67,20 @@ class LoginForm(forms.Form):
 class SettingForm(ModelForm):
 
     avatar =forms.ImageField(required=False)
-
-
-
+import itertools
+def anyTrue(s,sequence):
+    return True in itertools.imap(s,sequence)
+def endsWith(s,*arg):
+    return anyTrue(s.endswith,arg)
+class PictureForm(forms.Form):
+    picture = forms.CharField(max_length=500)
+    description = forms.CharField(max_length=30)
+    def clean_picture(self):
+        cleaned_data = super(PictureForm, self).clean()
+        picture = cleaned_data['picture']
+        if picture.startswith('media/'):
+            if not endsWith(picture,'.jpg', '.png', '.gif'):
+                raise forms.ValidationError('图片格式必须为jpg、png或gif')
+        else:
+            raise forms.ValidationError('不能随意修改地址')
+        return picture

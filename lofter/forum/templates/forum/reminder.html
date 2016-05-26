@@ -16,7 +16,10 @@
         {% for user in users  %}
                 <div style=" border-bottom:solid;border-color:#0c0c0c;border-width: 1px;margin-bottom: 1px ;border-top: 1px solid #202020;width: 225px;height: 55px">
                     <a  style=" display: block;  position: relative;height: 36px;
-                padding: 7px 50px 9px 17px;" href="{% url "forum:get_topics" user.id %}" ><div class='search-items'style="">{{ user.user_name }}</div></a>
+                padding: 7px 50px 9px 17px;" href="{% url "forum:get_topics" user.id %}" >
+                        <div class="user-img-box" style="float: left;position:relative; left: 50px;width: 20px;height: 20px"><img style="width: 20px;height: 20px"src="{{ user.avatar.url }}"/></div>
+                        <div class='search-items'style="">{{ user.user_name }}</div>
+                    </a>
                 </div>
         {% endfor %}
 
