@@ -32,12 +32,12 @@
                                         <div class="edit-img-box">
                                             {% if img_num == 1 %}
                                                 {% for img in topic.topic_picture.all %}
-                                                    <div class="img-big"><img src="{{ img.picture.url }}"/></div>
+                                                    <div class="img img-big"><img src="{{ img.picture.url }}"/></div>
                                                 {% endfor %}
                                             {% else %}
                                                 {% for img in topic.topic_picture.all %}
 
-                                                    <div class="img-small">
+                                                    <div class="img img-small">
                                                         <img src="{{ img.picture.url }}"/>
                                                         <div class="oparator">
                                                             <span class="operate remove-img"></span>
@@ -56,8 +56,19 @@
                                         {% endif %}
                                         <div style="clear:both"></div>
                                     </div>
-                                    <div style="width: 550px; height: 300px">
+                                    <div style="width: 550px; height: 300px; z-index:500">
                                         <textarea id="content" name="content" style="width:555px;height:200px;line-height:18px;"></textarea>
+                                        <div class="foot-button">
+                                            <button class="publish-but ztg"><span>发布</span></button>
+                                            <div>
+                                                <button class="preview-but ztg"><span>预览</span></button>
+                                                <div>
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                            <button class="cancel-but ztg"><span>取消</span></button>
+
+                                        </div>
                                     </div>
                                     <div style="clear:both"></div>
                                 </div>
@@ -108,37 +119,66 @@
                 }
                 else{
 
-                    if($('.edit-img-box').children('.img-big').length==0 && $('.edit-img-box').children('.img-small').length==0 ){
-                        $('.img-clear').before('<div class="img-big">'+'<img src='+response.address+'/>'+
+                    if($('.edit-img-box').children('.img-big').length==0 && $('.edit-img-box').children('.img.img-small').length==0 ){
+                        $('.img-clear').before('<div class="img img-big">'+'<img src='+response.address+'/>'+
+                                        '<div class="oparator">'+
+                                '<span class="operate remove-img">'+'</span>'+
+                                '<span class="operate note">'+'</span>'+
+                                '<span class="operate rotate">'+'</span>'+
+                                '</div>'+
 
-                            '</div>');
+                                '</div>');
 
 
                     }
                     else{
-                    $('.img-big').attr('class','img-small');
-                    $('.img-clear').before('<div class="img-small">'+'<img src='+response.address+'/>'+
-                            '<div class="oparator">'+
-                            '<span class="operate remove-img">'+'</span>'+
-                            '<span class="operate note">'+'</span>'+
-                            '<span class="operate rotate">'+'</span>'+
-                            '</div>'+'</div>'
-                    );
+                        $('.img-big').attr('class','img img-small').append('<div class="oparator">'+
+                                '<span class="operate remove-img">'+'</span>'+
+                                '<span class="operate note">'+'</span>'+
+                                '<span class="operate rotate">'+'</span>'+
+                                '</div>'+'</div>');
 
-                }
+                        $('.img-clear').before('<div class="img img-small">'+'<img src='+response.address+'/>'+
+                                '<div class="oparator">'+
+                                '<span class="operate remove-img">'+'</span>'+
+                                '<span class="operate note">'+'</span>'+
+                                '<span class="operate rotate">'+'</span>'+
+                                '</div>'+'</div>'
+                        );
+
+                    }
 
                 };
+                setTimeout(function () {
+                    var h=$('.edit-inner-1').height();
+
+                $('.edit-inner').css('height',h+200+'px');
+                $('.edit-background-screen').css('height',h+200+'px');
+                },200);
+
 
             });
-            
-            $(document).on('mouseenter','.img-small',function(){
+
+
+            $(document).on('mouseenter','.img',function(){
                 $(this).find('.oparator').show()
             });
-            $(document).on('mouseleave','.img-small',function(){
+            $(document).on('mouseleave','.img',function(){
                 $(this).find('.oparator').hide()
             });
             $(document).on('click','.remove-img',function(){
-                $(this).parents('.img-small').remove()
+                $(this).parents('.img').remove();
+                var child = $('.edit-img-box').children('.img');
+
+                if (child.length==1){
+                    child.removeClass('img-small').addClass('img-big');
+
+                }
+                var h=$('.edit-inner-1').height();
+
+                $('.edit-inner').css('height',h+200+'px');
+                $('.edit-background-screen').css('height',h+200+'px');
+
             });
 
 

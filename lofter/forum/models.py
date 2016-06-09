@@ -179,7 +179,7 @@ def event_handler(sender,instance, **kwargs):
             if name != reply.replyer.users.username:
                 try:
                     to_user = User.objects.get(username =name)
-                    event = Event(author=reply.replyer,event=reply,to_other=to_user)
+                    event = Event(author=reply.replyer,event=reply,to_other=to_user,status=0)
                     event.save()
                 except:
                     pass

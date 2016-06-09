@@ -444,3 +444,16 @@ ol{
 .operate.note{
     background-position: -1px -304px;
 }
+
+.ztg{
+    float: right;
+    height: 36px;
+    width: 100px;
+    margin-left: 10px; ;
+    background: #d2cbc4;
+    border: none;
+}
+
+.cancel-but{
+    float: left;
+}
